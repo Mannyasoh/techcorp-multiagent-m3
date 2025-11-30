@@ -1,0 +1,298 @@
+IT SUPPORT GUIDE
+
+GETTING STARTED
+
+New Employee Setup
+All new employees receive a company laptop within 2 business days of their start date. Standard configurations include:
+- MacBook Pro 14" (Development) or MacBook Air 13" (General)
+- 16GB RAM minimum, 32GB for development roles
+- 512GB SSD storage standard
+- Pre-installed software: Office 365, Slack, VPN client, security tools
+
+Initial Setup Process
+1. Receive laptop from IT with initial admin account
+2. Complete security training within first week
+3. Set up MFA for all company accounts
+4. Install required software from company portal
+5. Join domain and sync with Active Directory
+6. Complete backup configuration with Time Machine
+
+Account Management
+Company email accounts are created automatically upon hiring. Username format: firstname.lastname@techcorp.com
+Default passwords must be changed within 24 hours. Password requirements:
+- Minimum 12 characters
+- Mix of uppercase, lowercase, numbers, symbols
+- No dictionary words or personal information
+- Cannot reuse last 5 passwords
+
+HARDWARE SUPPORT
+
+Laptop Issues
+Common troubleshooting steps:
+1. Restart computer - resolves 70% of issues
+2. Check for software updates
+3. Clear browser cache and cookies
+4. Run disk utility to check for errors
+5. Reset PRAM/NVRAM if performance issues persist
+
+For hardware failures, contact IT helpdesk immediately. Replacement laptops available within 4 hours for critical issues. All data should be backed up to corporate cloud storage.
+
+Peripheral Equipment
+Monitors: Dell 27" 4K displays available on request
+Keyboards: Mechanical keyboards provided for developers
+Mice: Logitech wireless mice standard
+Docking stations: CalDigit TS3 Plus for MacBook users
+Webcams: Logitech C920 for video conferencing
+
+Mobile Devices
+Company phones provided for roles requiring customer contact:
+- iPhone 14 Pro for executives and sales
+- iPhone 14 for general business use
+- Monthly plan includes unlimited data and international roaming
+- MDM enrollment required for security compliance
+
+SOFTWARE AND APPLICATIONS
+
+Productivity Suite
+Office 365 Enterprise includes:
+- Outlook for email and calendar
+- Word, Excel, PowerPoint
+- Teams for communication and collaboration
+- SharePoint for document management
+- OneDrive for personal file storage (1TB limit)
+
+Development Tools
+GitHub Enterprise for code repositories
+Visual Studio Code with company extensions
+Docker Desktop for containerization
+Postman for API testing
+AWS CLI for cloud services
+Terraform for infrastructure as code
+
+Design and Creative
+Adobe Creative Cloud for design teams:
+- Photoshop, Illustrator, InDesign
+- Premiere Pro for video editing
+- After Effects for motion graphics
+- Figma for collaborative design
+- Sketch for UI/UX design
+
+Security Software
+CrowdStrike Falcon for endpoint protection
+1Password Business for password management
+Okta for single sign-on authentication
+VPN: FortiClient for secure remote access
+Microsoft Defender for additional protection
+
+NETWORK AND CONNECTIVITY
+
+WiFi Access
+Corporate WiFi networks:
+- TechCorp-Secure: WPA3 enterprise authentication
+- TechCorp-Guest: Temporary access for visitors
+- TechCorp-Devices: IoT and smart devices
+
+VPN Configuration
+All remote work requires VPN connection:
+- FortiClient VPN client pre-installed
+- Two-factor authentication required
+- Split tunneling enabled for performance
+- Auto-connect when on untrusted networks
+- Kill switch prevents unencrypted traffic
+
+Network Troubleshooting
+Connection issues checklist:
+1. Check cable connections
+2. Restart network adapter
+3. Flush DNS cache
+4. Reset network settings
+5. Contact ISP if home internet issues
+6. Use mobile hotspot as backup
+
+SECURITY POLICIES
+
+Data Protection
+All company data must be stored in approved locations:
+- OneDrive Business for personal files
+- SharePoint for team collaboration
+- AWS S3 for application data
+- No personal cloud storage permitted
+
+USB devices require IT approval and encryption
+Email attachments scanned automatically
+Web browsing filtered for malicious content
+Software installation requires admin approval
+
+Multi-Factor Authentication
+Required for all company accounts:
+- Office 365 and email access
+- GitHub and development tools
+- AWS and cloud services
+- VPN and remote access
+- Administrative systems
+
+MFA methods supported:
+- Microsoft Authenticator (preferred)
+- SMS text messages
+- Hardware security keys
+- Phone call verification
+
+Incident Response
+Security incidents must be reported immediately:
+1. Disconnect affected device from network
+2. Contact IT security team: security@techcorp.com
+3. Document incident details and timeline
+4. Preserve evidence for investigation
+5. Follow remediation instructions
+
+Common security incidents:
+- Phishing email received
+- Malware detection
+- Lost or stolen device
+- Unauthorized access attempt
+- Data breach suspected
+
+COMMUNICATION TOOLS
+
+Email Systems
+Exchange Online provides enterprise email:
+- 100GB mailbox storage per user
+- Shared mailboxes for departments
+- Distribution lists for group communication
+- Retention policies for compliance
+- Mobile access via Outlook app
+
+Messaging Platforms
+Slack Enterprise Grid for team communication:
+- Channel organization by team/project
+- Direct messaging and group chats
+- File sharing and screen sharing
+- Integration with development tools
+- Custom emoji and workflows
+
+Video Conferencing
+Microsoft Teams for meetings and calls:
+- HD video with up to 1000 participants
+- Screen sharing and recording
+- Breakout rooms for group discussions
+- Calendar integration
+- Phone system integration
+
+Collaboration Tools
+SharePoint for document collaboration:
+- Version control and co-authoring
+- Approval workflows
+- Department-specific sites
+- Search across all content
+- Integration with Office apps
+
+PROJECT MANAGEMENT TOOLS
+
+Development Projects
+Jira for agile project management:
+- Scrum and Kanban boards
+- Sprint planning and tracking
+- Bug tracking and resolution
+- Integration with GitHub
+- Custom workflows and fields
+
+General Projects
+Asana for non-development projects:
+- Task assignment and tracking
+- Timeline and Gantt charts
+- Team collaboration
+- Reporting and analytics
+- Mobile app access
+
+Time Tracking
+Toggl for project time tracking:
+- Browser extension for easy tracking
+- Project and client categorization
+- Reporting for billing
+- Team time tracking
+- Integration with other tools
+
+BACKUP AND RECOVERY
+
+Data Backup
+Automated backup systems:
+- Time Machine for local backups
+- OneDrive sync for cloud backup
+- Corporate servers backed up nightly
+- Retention: 30 days local, 1 year cloud
+- Test restores performed monthly
+
+File Recovery
+Deleted file recovery process:
+1. Check OneDrive recycle bin
+2. Contact IT for Time Machine restore
+3. Access SharePoint version history
+4. Request backup restoration
+5. Use shadow copy for Windows systems
+
+Disaster Recovery
+Business continuity procedures:
+- Cloud-first architecture minimizes downtime
+- Redundant internet connections
+- Mobile hotspots for emergency connectivity
+- Work-from-home capabilities for all staff
+- Recovery time objective: 4 hours
+
+HELP DESK SUPPORT
+
+Contact Methods
+IT Help Desk available Monday-Friday 7 AM - 7 PM EST:
+- Email: helpdesk@techcorp.com (4-hour response)
+- Phone: 1-800-555-HELP (immediate response)
+- Chat: IT portal chat (30-minute response)
+- Self-service: itportal.techcorp.com
+
+Ticket Priorities
+Critical: System down, security incident, executive support
+High: Laptop failure, network outage, productivity blocker
+Medium: Software issues, account problems, hardware requests
+Low: Enhancement requests, training questions
+
+Service Level Agreements
+Critical issues: 1-hour response, 4-hour resolution
+High priority: 4-hour response, 1-business day resolution
+Medium priority: 1-business day response, 3-day resolution
+Low priority: 3-business day response, 1-week resolution
+
+Self-Service Options
+IT Portal provides:
+- Software installation requests
+- Hardware ordering
+- Password resets
+- VPN setup guides
+- Knowledge base articles
+- Training videos
+- System status page
+
+TRAINING AND RESOURCES
+
+Security Training
+Annual mandatory training covers:
+- Phishing identification
+- Password best practices
+- Social engineering awareness
+- Data classification
+- Incident reporting
+- Compliance requirements
+
+New User Training
+Orientation sessions include:
+- Email and calendar setup
+- Collaboration tools overview
+- Security policy review
+- Backup configuration
+- VPN setup
+- Mobile device enrollment
+
+Ongoing Education
+Monthly lunch-and-learn sessions:
+- New technology introductions
+- Security updates
+- Productivity tips
+- Tool deep dives
+- Best practices sharing

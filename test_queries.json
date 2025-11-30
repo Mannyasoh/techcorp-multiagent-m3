@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "query": "How many vacation days do I get as a new employee?",
+    "expected_intent": "hr",
+    "category": "hr_benefits"
+  },
+  {
+    "id": 2,
+    "query": "My laptop won't connect to the WiFi. Can you help me troubleshoot?",
+    "expected_intent": "tech",
+    "category": "tech_support"
+  },
+  {
+    "id": 3,
+    "query": "What's the maximum amount I can spend on dinner during business travel?",
+    "expected_intent": "finance",
+    "category": "expense_policy"
+  },
+  {
+    "id": 4,
+    "query": "I need to reset my password for the company email system",
+    "expected_intent": "tech",
+    "category": "account_management"
+  },
+  {
+    "id": 5,
+    "query": "What health insurance options are available?",
+    "expected_intent": "hr",
+    "category": "hr_benefits"
+  },
+  {
+    "id": 6,
+    "query": "How do I submit an expense report for my recent conference attendance?",
+    "expected_intent": "finance",
+    "category": "expense_process"
+  },
+  {
+    "id": 7,
+    "query": "What software can I install on my company laptop without IT approval?",
+    "expected_intent": "tech",
+    "category": "software_policy"
+  },
+  {
+    "id": 8,
+    "query": "I want to take parental leave. What's the process and how much time do I get?",
+    "expected_intent": "hr",
+    "category": "leave_policy"
+  },
+  {
+    "id": 9,
+    "query": "What's the approval process for purchasing equipment over $25,000?",
+    "expected_intent": "finance",
+    "category": "procurement"
+  },
+  {
+    "id": 10,
+    "query": "How do I set up VPN access for working from home?",
+    "expected_intent": "tech",
+    "category": "remote_access"
+  },
+  {
+    "id": 11,
+    "query": "What's the weather like today?",
+    "expected_intent": "general",
+    "category": "out_of_scope"
+  },
+  {
+    "id": 12,
+    "query": "Can you tell me about the company's performance review process?",
+    "expected_intent": "hr",
+    "category": "performance_management"
+  }
+]
