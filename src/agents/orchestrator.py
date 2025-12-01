@@ -5,7 +5,7 @@ from langchain_core.prompts import ChatPromptTemplate
 from langfuse import observe
 from pydantic import BaseModel
 
-from ..llm_factory import create_llm
+from src.llm_factory import create_llm
 
 
 class IntentClassification(BaseModel):

@@ -2,12 +2,12 @@ from typing import Any, Dict
 
 from langfuse import Langfuse, observe
 
-from .agents.evaluator import EvaluatorAgent
-from .agents.orchestrator import OrchestratorAgent
-from .agents.rag_agent import FinanceAgent, HRAgent, TechAgent
-from .config import Settings
-from .logger import get_logger
-from .vector_store import VectorStoreManager
+from src.agents.evaluator import EvaluatorAgent
+from src.agents.orchestrator import OrchestratorAgent
+from src.agents.rag_agent import FinanceAgent, HRAgent, TechAgent
+from src.config import Settings
+from src.logger import get_logger
+from src.vector_store import VectorStoreManager
 
 logger = get_logger("multi_agent_system")
 

@@ -7,7 +7,7 @@ from langchain_core.documents import Document
 from langchain_openai import OpenAIEmbeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from .logger import get_logger
+from src.logger import get_logger
 
 logger = get_logger("vector_store")
 

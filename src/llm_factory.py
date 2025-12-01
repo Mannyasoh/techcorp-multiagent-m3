@@ -1,6 +1,6 @@
 from langchain_openai import ChatOpenAI
 
-from .config import Settings
+from src.config import Settings
 
 
 def create_llm(

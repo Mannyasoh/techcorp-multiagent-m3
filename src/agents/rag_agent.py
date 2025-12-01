@@ -8,7 +8,7 @@ from langchain_community.vectorstores.faiss import FAISS
 from langchain_core.prompts import PromptTemplate
 from langfuse import observe
 
-from ..llm_factory import create_llm
+from src.llm_factory import create_llm
 
 
 class BaseRAGAgent(ABC):

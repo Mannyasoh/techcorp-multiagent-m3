@@ -2,7 +2,7 @@ import os
 
 from pydantic_settings import BaseSettings
 
-from .logger import get_logger
+from src.logger import get_logger
 
 logger = get_logger("config")
 
