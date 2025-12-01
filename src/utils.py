@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Dict, Optional
+from typing import TYPE_CHECKING, Any, Dict, Optional
 
 from .config import Settings, validate_environment
 from .logger import get_logger
@@ -24,7 +24,7 @@ def initialize_system() -> Optional["MultiAgentSystem"]:
 
 def safe_process_query(
     system: "MultiAgentSystem", query: str, evaluate: bool = False
-) -> Optional[Dict]:
+) -> Optional[Dict[str, Any]]:
     try:
         logger.debug(
             f"Processing query: '{query[:50]}{'...' if len(query) > 50 else ''}'"

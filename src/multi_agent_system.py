@@ -60,7 +60,8 @@ class MultiAgentSystem:
         # Step 1: Classify intent
         routing = self.orchestrator.route_query(query)
         logger.debug(
-            f"Query routed to: {routing['intent']} (confidence: {routing['confidence']})"
+            f"Query routed to: {routing['intent']} "
+            f"(confidence: {routing['confidence']})"
         )
 
         # Step 2: Route to appropriate agent

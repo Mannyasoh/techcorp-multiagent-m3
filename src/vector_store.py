@@ -53,7 +53,8 @@ class VectorStoreManager:
     def get_vector_store(self, store_name: str) -> FAISS:
         if store_name not in self.vector_stores:
             logger.error(
-                f"Vector store '{store_name}' not found. Available stores: {list(self.vector_stores.keys())}"
+                f"Vector store '{store_name}' not found. "
+                f"Available stores: {list(self.vector_stores.keys())}"
             )
             raise ValueError(f"Vector store '{store_name}' not found")
         logger.debug(f"Retrieved vector store: {store_name}")

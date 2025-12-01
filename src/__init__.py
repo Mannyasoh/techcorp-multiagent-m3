@@ -1,2 +1,7 @@
+from .logger import get_logger
+
+logger = get_logger("src")
+
+
 def llm_orchestator() -> None:
-    print("LLM Orchestrator initialized")
+    logger.info("LLM Orchestrator initialized")

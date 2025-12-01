@@ -3,7 +3,9 @@ from langchain_openai import ChatOpenAI
 from .config import Settings
 
 
-def create_llm(api_key: str, temperature: float = 0, model: str = None) -> ChatOpenAI:
+def create_llm(
+    api_key: str, temperature: float = 0, model: str | None = None
+) -> ChatOpenAI:
     if model is None:
         settings = Settings()
         model = settings.model_name

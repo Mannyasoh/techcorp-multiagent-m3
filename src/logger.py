@@ -1,6 +1,6 @@
 import sys
 
-from loguru import logger
+from loguru import logger  # type: ignore
 
 
 def setup_logger() -> None:
@@ -15,16 +15,6 @@ def setup_logger() -> None:
         colorize=True,
     )
 
-    logger.add(
-        "logs/multi_agent_system.log",
-        rotation="10 MB",
-        retention="1 week",
-        level="DEBUG",
-        format="{time:YYYY-MM-DD HH:mm:ss} | {level: <8} | "
-        "{name}:{function}:{line} - {message}",
-        enqueue=True,
-    )
 
-
-def get_logger(name: str = __name__):
+def get_logger(name: str = __name__) -> logger:
     return logger.bind(name=name)

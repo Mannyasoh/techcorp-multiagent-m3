@@ -31,7 +31,7 @@ class EvaluationOutputParser(BaseOutputParser):
         except (ValueError, IndexError) as e:
             return self._default_evaluation(f"Failed to parse evaluation: {str(e)}")
 
-    def _extract_scores(self, lines: list) -> dict:
+    def _extract_scores(self, lines: list[str]) -> dict[str, int]:
         scores = {
             "relevance_score": 5,
             "completeness_score": 5,
@@ -51,7 +51,7 @@ class EvaluationOutputParser(BaseOutputParser):
 
         return scores
 
-    def _extract_reasoning(self, lines: list) -> str:
+    def _extract_reasoning(self, lines: list[str]) -> str:
         for line in lines:
             if line.lower().startswith("reasoning:"):
                 return line.split(":", 1)[1].strip()
