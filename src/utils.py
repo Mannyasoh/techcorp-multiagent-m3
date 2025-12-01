@@ -1,7 +1,8 @@
-from typing import TYPE_CHECKING, Any, Dict, Optional
+from typing import TYPE_CHECKING, Dict, Optional
 
 from .config import Settings, validate_environment
 from .logger import get_logger
+from .schemas import QueryResult, create_safe_result
 
 if TYPE_CHECKING:
     from .multi_agent_system import MultiAgentSystem
@@ -24,40 +25,42 @@ def initialize_system() -> Optional["MultiAgentSystem"]:
 
 def safe_process_query(
     system: "MultiAgentSystem", query: str, evaluate: bool = False
-) -> Optional[Dict[str, Any]]:
+) -> QueryResult:
     try:
         logger.debug(
             f"Processing query: '{query[:50]}{'...' if len(query) > 50 else ''}'"
         )
         result = system.process_query(query, evaluate=evaluate)
-        logger.info(
-            f"Query processed successfully - Intent: {result['routing']['intent']}"
-        )
-        return result
+        safe_result = create_safe_result(result, query)
+        logger.info(f"Query processed successfully - Intent: {safe_result.intent}")
+        return safe_result
     except Exception as e:
         logger.error(f"Query processing failed: {e}")
-        return None
+        return create_safe_result(None, query)
 
 
-def format_query_result(result: Dict, show_details: bool = True) -> str:
-    if not result:
+def format_query_result(result: QueryResult, show_details: bool = True) -> str:
+    if not result.is_successful:
+        if hasattr(result, "error_message"):
+            return f"Query failed: {result.error_message}"
         return "Query failed"
 
     output = []
-    output.append(f"Intent: {result['routing']['intent']}")
-    output.append(f"Agent: {result['response']['agent']}")
+    output.append(f"Intent: {result.intent}")
+    output.append(f"Agent: {result.agent}")
 
     if show_details:
-        answer = result["response"]["answer"]
+        answer = result.answer
         truncated = answer[:100] + "..." if len(answer) > 100 else answer
         output.append(f"Response: {truncated}")
 
-        if result.get("evaluation"):
-            if "evaluation" in result["evaluation"]:
-                score = result["evaluation"]["evaluation"]["overall_score"]
+        if result.has_evaluation:
+            eval_data = result.get_evaluation_data()
+            if eval_data:
+                score = eval_data.get("overall_score", 0)
                 output.append(f"Quality: {score}/10")
-            elif "error" in result["evaluation"]:
-                output.append(f"Evaluation error: {result['evaluation']['error']}")
+        elif result.evaluation and "error" in result.evaluation:
+            output.append(f"Evaluation error: {result.evaluation['error']}")
 
     return "\n   ".join([""] + output)
 

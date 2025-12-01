@@ -29,7 +29,7 @@ def quick_demo() -> None:
     for i, query in enumerate(demo_queries, 1):
         logger.info(f"\n{i}. Query: {query}")
         result = safe_process_query(system, query, evaluate=True)
-        if result:
+        if result.is_successful:
             logger.info(format_query_result(result, show_details=False))
         else:
             logger.warning(f"Query {i} failed to process")
@@ -56,12 +56,12 @@ def interactive_mode() -> None:
                 continue
 
             result = safe_process_query(system, query, evaluate=True)
-            if result:
-                logger.info(f"\nDepartment: {result['routing']['intent'].upper()}")
-                logger.info(f"Answer: {result['response']['answer']}")
+            if result.is_successful:
+                logger.info(f"\nDepartment: {result.intent.upper()}")
+                logger.info(f"Answer: {result.answer}")
 
-                if result.get("evaluation", {}).get("evaluation"):
-                    score = result["evaluation"]["evaluation"]["overall_score"]
+                if result.has_evaluation:
+                    score = result.evaluation_score
                     logger.info(f"Quality Score: {score}/10")
 
                 logger.info("\n" + "-" * 50)
@@ -81,25 +81,26 @@ def test_single_query(query: str) -> None:
         return
 
     result = safe_process_query(system, query, evaluate=True)
-    if not result:
+    if not result.is_successful:
         return
 
-    logger.info(f"Intent: {result['routing']['intent']}")
-    logger.info(f"Confidence: {result['routing']['confidence']}")
-    logger.info(f"Agent: {result['response']['agent']}")
-    logger.info(f"Answer: {result['response']['answer']}")
+    logger.info(f"Intent: {result.intent}")
+    logger.info(f"Confidence: {result.confidence}")
+    logger.info(f"Agent: {result.agent}")
+    logger.info(f"Answer: {result.answer}")
 
-    if result.get("evaluation", {}).get("evaluation"):
-        eval_data = result["evaluation"]["evaluation"]
-        logger.info("\nQuality Evaluation:")
-        logger.info(f"  Overall: {eval_data['overall_score']}/10")
-        logger.info(f"  Relevance: {eval_data['relevance_score']}/10")
-        logger.info(f"  Completeness: {eval_data['completeness_score']}/10")
-        logger.info(f"  Accuracy: {eval_data['accuracy_score']}/10")
+    if result.has_evaluation:
+        eval_data = result.get_evaluation_data()
+        if eval_data:
+            logger.info("\nQuality Evaluation:")
+            logger.info(f"  Overall: {eval_data.get('overall_score', 0)}/10")
+            logger.info(f"  Relevance: {eval_data.get('relevance_score', 0)}/10")
+            logger.info(f"  Completeness: {eval_data.get('completeness_score', 0)}/10")
+            logger.info(f"  Accuracy: {eval_data.get('accuracy_score', 0)}/10")
 
-    logger.info(f"\nSources ({len(result['response']['source_documents'])}):")
-    for doc in result["response"]["source_documents"]:
-        logger.info(f"  - {doc['filename']}")
+    logger.info(f"\nSources ({len(result.source_documents)}):")
+    for doc in result.source_documents:
+        logger.info(f"  - {doc.filename}")
 
 
 if __name__ == "__main__":

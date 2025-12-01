@@ -37,8 +37,8 @@ def run_evaluation_suite(system: MultiAgentSystem) -> Dict[str, Any]:
         logger.info(f"{i:2d}. {query[:60]}...")
 
         result = safe_process_query(system, query, evaluate=True)
-        if result:
-            actual_intent = result["routing"]["intent"]
+        if result.is_successful:
+            actual_intent = result.intent
 
             # Track domain statistics
             domain_stats = cast(
@@ -55,17 +55,15 @@ def run_evaluation_suite(system: MultiAgentSystem) -> Dict[str, Any]:
                 domain_stats["correct"] = domain_stats["correct"] + 1
 
             # Check response quality
-            has_response = bool(
-                result["response"]["answer"] and len(result["response"]["answer"]) > 20
-            )
+            has_response = bool(result.answer and len(result.answer) > 20)
             if has_response:
                 results["successful_responses"] = (
                     cast(int, results["successful_responses"]) + 1
                 )
 
             # Collect quality scores
-            if result["evaluation"]:
-                score = result["evaluation"]["evaluation"]["overall_score"]
+            if result.has_evaluation:
+                score = result.evaluation_score
                 quality_scores = cast(list, results["quality_scores"])
                 quality_scores.append(score)
 
@@ -74,8 +72,8 @@ def run_evaluation_suite(system: MultiAgentSystem) -> Dict[str, Any]:
                 f"    {status} Expected: {expected_intent} | Got: {actual_intent}"
             )
 
-            if result.get("evaluation", {}).get("evaluation"):
-                score = result["evaluation"]["evaluation"]["overall_score"]
+            if result.has_evaluation:
+                score = result.evaluation_score
                 logger.info(f"    Quality: {score}/10")
         else:
             logger.warning("    Query failed")
@@ -168,7 +166,7 @@ def benchmark_performance(system: MultiAgentSystem) -> None:
         query_time = end_time - start_time
         total_time += query_time
 
-        if result and result["response"]["answer"]:
+        if result.is_successful and result.answer:
             successful_queries += 1
             logger.info(f"PASS {query[:40]}... ({query_time:.2f}s)")
         else:
@@ -207,9 +205,9 @@ def stress_test(system: MultiAgentSystem) -> None:
     successful: int = 0
     for i, query in enumerate(stress_queries, 1):
         result = safe_process_query(system, query)
-        if result and result["response"]["answer"]:
+        if result.is_successful and result.answer:
             successful += 1
-            logger.info(f"PASS Query {i:2d}: {result['routing']['intent']}")
+            logger.info(f"PASS Query {i:2d}: {result.intent}")
         else:
             logger.warning(f"FAIL Query {i:2d}: Failed")
 

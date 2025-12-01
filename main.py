@@ -5,6 +5,7 @@ import json
 # from src.config import Settings, validate_environment
 from src.logger import get_logger, setup_logger
 from src.multi_agent_system import MultiAgentSystem
+from src.schemas import create_safe_result
 from src.utils import (
     log_performance_summary,
     log_system_header,
@@ -83,15 +84,13 @@ def test_full_workflow(system: MultiAgentSystem) -> None:
         logger.info(f"\nProcessing Query: {query}")
         logger.debug("-" * 40)
 
-        result = system.process_query(query)
+        raw_result = system.process_query(query)
+        result = create_safe_result(raw_result, query)
 
-        logger.info(
-            f"Intent: {result['routing']['intent']} "
-            f"(confidence: {result['routing']['confidence']})"
-        )
-        logger.info(f"Agent: {result['response']['agent']}")
-        logger.info(f"Response: {result['response']['answer'][:150]}...")
-        logger.info(f"Sources: {len(result['response']['source_documents'])} documents")
+        logger.info(f"Intent: {result.intent} " f"(confidence: {result.confidence})")
+        logger.info(f"Agent: {result.agent}")
+        logger.info(f"Response: {result.answer[:150]}...")
+        logger.info(f"Sources: {len(result.source_documents)} documents")
 
 
 def validate_test_queries(system: MultiAgentSystem) -> None:
@@ -140,19 +139,23 @@ def test_evaluation_system(system: MultiAgentSystem) -> None:
         logger.info(f"\nEvaluating Query: {query}")
         logger.debug("-" * 30)
 
-        result = system.process_query(query, evaluate=True)
+        raw_result = system.process_query(query, evaluate=True)
+        result = create_safe_result(raw_result, query)
 
-        logger.info(f"Agent: {result['response']['agent']}")
-        logger.info(f"Response: {result['response']['answer'][:100]}...")
+        logger.info(f"Agent: {result.agent}")
+        logger.info(f"Response: {result.answer[:100]}...")
 
-        if result["evaluation"]:
-            eval_data = result["evaluation"]["evaluation"]
-            logger.info("Quality Scores:")
-            logger.info(f"   - Overall: {eval_data['overall_score']}/10")
-            logger.info(f"   - Relevance: {eval_data['relevance_score']}/10")
-            logger.info(f"   - Completeness: {eval_data['completeness_score']}/10")
-            logger.info(f"   - Accuracy: {eval_data['accuracy_score']}/10")
-            logger.info("Scores submitted to Langfuse")
+        if result.has_evaluation:
+            eval_data = result.get_evaluation_data()
+            if eval_data:
+                logger.info("Quality Scores:")
+                logger.info(f"   - Overall: {eval_data.get('overall_score', 0)}/10")
+                logger.info(f"   - Relevance: {eval_data.get('relevance_score', 0)}/10")
+                logger.info(
+                    f"   - Completeness: {eval_data.get('completeness_score', 0)}/10"
+                )
+                logger.info(f"   - Accuracy: {eval_data.get('accuracy_score', 0)}/10")
+                logger.info("Scores submitted to Langfuse")
 
 
 def interactive_demo(system: MultiAgentSystem) -> None:
@@ -167,12 +170,13 @@ def interactive_demo(system: MultiAgentSystem) -> None:
 
     for query in demo_queries:
         logger.info(f"\n{query}")
-        result = system.process_query(query, evaluate=True)
-        logger.info(f"Routed to: {result['routing']['intent']} agent")
-        logger.info(f"Response: {result['response']['answer'][:120]}...")
+        raw_result = system.process_query(query, evaluate=True)
+        result = create_safe_result(raw_result, query)
+        logger.info(f"Routed to: {result.intent} agent")
+        logger.info(f"Response: {result.answer[:120]}...")
 
-        if result["evaluation"]:
-            score = result["evaluation"]["evaluation"]["overall_score"]
+        if result.has_evaluation:
+            score = result.evaluation_score
             logger.info(f"Quality Score: {score}/10")
 
 
@@ -196,15 +200,16 @@ def performance_summary(system: MultiAgentSystem) -> None:
     }
 
     for query, expected_intent in performance_queries:
-        result = system.process_query(query)
+        raw_result = system.process_query(query)
+        result = create_safe_result(raw_result, query)
 
-        if result["routing"]["intent"] == expected_intent:
+        if result.intent == expected_intent:
             results["correct_routing"] += 1
 
-        if result["response"]["answer"] and len(result["response"]["answer"]) > 50:
+        if result.answer and len(result.answer) > 50:
             results["responses_generated"] += 1
 
-        if result["response"]["source_documents"]:
+        if result.source_documents:
             results["sources_found"] += 1
 
     results_data = {
